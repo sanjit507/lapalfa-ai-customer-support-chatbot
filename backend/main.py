@@ -1,6 +1,8 @@
+from pathlib import Path
 from typing import Optional
 
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -139,12 +141,12 @@ def canned_responses() -> dict:
 
 
 # =========================================================
-# ROOT
+# HEALTH CHECK
 # =========================================================
 
-@app.get("/")
-def root():
-    return {"message": "Lapalfa chatbot API is running"}
+@app.get("/api/health")
+def health():
+    return {"status": "ok", "message": "Lapalfa chatbot API is running"}
 
 
 # =========================================================
@@ -247,3 +249,12 @@ def chat(request: ChatRequest):
     # =====================================================
 
     return handover_response()
+
+
+# =========================================================
+# SERVE FRONTEND (index.html, style.css, script.js)
+# =========================================================
+
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
+if FRONTEND_DIR.exists():
+    app.mount("/", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend")
