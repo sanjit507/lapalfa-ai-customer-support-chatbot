@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from lapalfa_chatbot.intent import detect_intent
 from lapalfa_chatbot.product_service import search_product_for_chat, check_compatibility
+from lapalfa_chatbot.memory import get_memories_and_store, format_memories_for_prompt
 
 
 # =========================================================
@@ -48,6 +49,7 @@ WHATSAPP_LINK   = f"https://wa.me/{WHATSAPP_NUMBER}"
 
 class ChatRequest(BaseModel):
     message: str
+    chat_id: Optional[str] = "guest_user"
 
 
 class ProductResponse(BaseModel):
@@ -157,6 +159,12 @@ def health():
 def chat(request: ChatRequest):
 
     message = request.message.strip()
+    chat_id = request.chat_id or "guest_user"
+
+    # 1. Fetch memories and store current user message with ChatSorter
+    memories = get_memories_and_store(chat_id, message)
+    memory_context = format_memories_for_prompt(memories)
+
     intent  = detect_intent(message)
 
     responses = canned_responses()
@@ -175,8 +183,20 @@ def chat(request: ChatRequest):
 
     # =====================================================
     # ASK FOR MODEL (Generic battery query)
+    # Check if we already remember the user's laptop model
     # =====================================================
     if intent == "ask_model":
+        if memories:
+            for m in memories:
+                mem_text = m.get("summary") or m.get("text") or ""
+                recalled_products = check_compatibility(mem_text)
+                if recalled_products:
+                    return ChatResponse(
+                        type="product",
+                        answer=f"🔋 Based on your previous context (**{mem_text}**), here are compatible batteries:",
+                        products=make_product_data(recalled_products),
+                    )
+
         return ChatResponse(
             type="text",
             answer="Sure! Please provide your **laptop model number** (e.g., HP 15-DE0999NF) so I can find the exact battery or part for you.",

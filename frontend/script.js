@@ -1,5 +1,12 @@
 const API_URL = window.location.protocol.startsWith("http") ? "/chat" : "http://127.0.0.1:8000/chat";
 
+// Unique Chat ID for ChatSorter memory retention
+let chatId = localStorage.getItem("lapalfa_chat_id");
+if (!chatId) {
+    chatId = "user_" + Math.random().toString(36).substring(2, 11);
+    localStorage.setItem("lapalfa_chat_id", chatId);
+}
+
 const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const sendButton = document.getElementById("send-button");
@@ -420,7 +427,8 @@ async function sendMessage() {
                 },
 
                 body: JSON.stringify({
-                    message: message
+                    message: message,
+                    chat_id: chatId
                 })
 
             });
