@@ -2,6 +2,19 @@
 
 Lapalfa AI Customer Support Chatbot is an intelligent assistant designed to help customers with product searches, battery compatibility queries, order tracking, and general support. It uses a modern RAG (Retrieval-Augmented Generation) pipeline backed by Qdrant and Ollama, integrates **ChatSorter** for persistent conversation memory across sessions, and falls back to human handover via WhatsApp when necessary.
 
+<img width="647" height="886" alt="Screenshot 2026-10-20 013727" src="https://github.com/user-attachments/assets/cc10bcb6-eb84-4a53-b78e-a1096dfcf038" />
+
+<img width="610" height="882" alt="Screenshot 2026-10-20 013851" src="https://github.com/user-attachments/assets/64450b5c-b8d5-46d5-90c4-9b49dbf02db5" />
+
+<img width="652" height="865" alt="Screenshot 2026-10-20 013905" src="https://github.com/user-attachments/assets/a5a27f5e-1f4e-4efb-997a-ea679299e254" />
+
+<img width="597" height="841" alt="Screenshot 2026-10-20 014000" src="https://github.com/user-attachments/assets/63de8d3f-ee82-4cfa-95db-9ea79f01db56" />
+
+
+
+
+
+
 ## Architecture Diagram
 
 ```mermaid
