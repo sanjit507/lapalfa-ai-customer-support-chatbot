@@ -10,6 +10,9 @@ Lapalfa AI Customer Support Chatbot is an intelligent assistant designed to help
 
 <img width="597" height="841" alt="Screenshot 2026-10-20 014000" src="https://github.com/user-attachments/assets/63de8d3f-ee82-4cfa-95db-9ea79f01db56" />
 
+<img width="1917" height="965" alt="Screenshot 2026-10-20 014423" src="https://github.com/user-attachments/assets/925ded97-506e-4aa2-ad98-4650ee6ccec9" />
+
+
 
 
 
